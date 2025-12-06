@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 async function generatePasswordHash() {
   const password = process.argv[2] || 'ChangeMe123!';

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { signToken } from '@/lib/auth/jwt';
 import { setSessionCookie } from '@/lib/auth/cookies';

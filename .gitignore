@@ -30,6 +30,9 @@ yarn-error.log*
 .env.local
 .env
 
+# deployment config (contains secrets)
+deployment-config*.json
+
 # vercel
 .vercel
 

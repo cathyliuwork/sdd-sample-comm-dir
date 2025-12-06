@@ -3,6 +3,9 @@
 # ==================================================
 FROM node:18-alpine AS builder
 
+# 安装编译 bcrypt 所需的依赖
+RUN apk add --no-cache python3 make g++
+
 # 设置工作目录
 WORKDIR /app
 
@@ -11,7 +14,8 @@ COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 
 # 2. 安装所有依赖（包括 devDependencies，构建需要）
-RUN npm ci
+# 使用 --maxsockets 限制并发连接，减少内存使用
+RUN npm ci --maxsockets=1
 
 # 3. 复制应用源代码
 COPY . .

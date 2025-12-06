@@ -8,7 +8,7 @@
 
 ## Quick Reference
 
-**Purpose**: 定义微信群成员介绍项目的多社区路由架构、链接生成策略和社区 slug 管理。
+**Purpose**: 定义社区成员名录项目的多社区路由架构、链接生成策略和社区 slug 管理。
 
 **Dependencies**:
 - S-00: 系统架构概览

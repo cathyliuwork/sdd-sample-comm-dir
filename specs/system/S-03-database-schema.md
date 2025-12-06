@@ -8,7 +8,7 @@
 
 ## Quick Reference
 
-**Purpose**: 定义微信群成员介绍项目的数据库模型、Prisma schema、索引优化和数据迁移策略。
+**Purpose**: 定义社区成员名录项目的数据库模型、Prisma schema、索引优化和数据迁移策略。
 
 **Dependencies**:
 - S-00: 系统架构概览

@@ -1,0 +1,60 @@
+// Prisma Schema for WeChat Community Member Introduction System
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================
+// 社区表（Communities）
+// ============================================
+
+model Community {
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(100)
+  slug        String   @unique @db.VarChar(100)
+  description String?  @db.Text
+  accessCode  String?  @db.VarChar(50) @map("access_code")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // 关联关系
+  members Member[]
+
+  @@map("communities")
+}
+
+// ============================================
+// 成员表（Members）
+// ============================================
+
+model Member {
+  id          String   @id @default(uuid())
+  communityId String   @map("community_id")
+
+  // 必填字段
+  name       String @db.VarChar(100)
+  location   String @db.VarChar(100)
+  profession String @db.VarChar(100)
+
+  // 选填字段
+  currentWork String? @db.Text @map("current_work")
+  shareTopics String? @db.Text @map("share_topics")
+  seekTopics  String? @db.Text @map("seek_topics")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // 关联关系
+  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+  // 索引
+  @@index([communityId])
+  @@index([createdAt])
+  @@map("members")
+}

@@ -28,7 +28,14 @@ export async function signToken(payload: SessionPayload): Promise<string> {
 export async function verifyToken(token: string): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET);
-    return payload as SessionPayload;
+    // 验证payload包含必需的字段
+    if (
+      typeof payload.username === 'string' &&
+      payload.role === 'admin'
+    ) {
+      return payload as unknown as SessionPayload;
+    }
+    return null;
   } catch (error) {
     console.error('JWT verification failed:', error);
     return null;

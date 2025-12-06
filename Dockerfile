@@ -6,13 +6,18 @@ FROM node:18-alpine AS builder
 # 设置工作目录
 WORKDIR /app
 
+# 设置环境变量优化内存使用
+ENV NODE_ENV=production
+ENV NODE_OPTIONS="--max-old-space-size=512"
+ENV NEXT_TELEMETRY_DISABLED=1
+
 # 1. 复制依赖定义文件
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 
-# 2. 安装所有依赖（包括 devDependencies，构建需要）
-# 使用 --maxsockets 限制并发连接，减少内存使用
-RUN npm ci --maxsockets=1
+# 2. 安装生产依赖和构建依赖
+# 使用 --omit=dev 后再安装 devDependencies 可以减少内存峰值
+RUN npm ci --omit=optional --prefer-offline --no-audit --progress=false
 
 # 3. 复制应用源代码
 COPY . .
@@ -21,6 +26,7 @@ COPY . .
 RUN npx prisma generate
 
 # 5. 构建 Next.js 应用（生成 .next 目录）
+# 限制并发，减少内存使用
 RUN npm run build
 
 # ==================================================

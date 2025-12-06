@@ -1,0 +1,81 @@
+# ==================================================
+# Node.js 依赖和构建产物
+# ==================================================
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+.pnpm-store
+
+# 构建产物（会在容器内重新构建）
+.next
+out
+dist
+build
+
+# ==================================================
+# 开发工具和配置
+# ==================================================
+.git
+.gitignore
+.github
+.vscode
+.idea
+.DS_Store
+*.swp
+*.swo
+*~
+
+# ==================================================
+# 环境变量（敏感信息）
+# ==================================================
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+!.env.example
+
+# ==================================================
+# 测试文件
+# ==================================================
+*.test.ts
+*.test.tsx
+*.test.js
+*.test.jsx
+*.spec.ts
+*.spec.tsx
+*.spec.js
+*.spec.jsx
+__tests__
+__mocks__
+coverage
+.nyc_output
+playwright-report
+test-results
+
+# ==================================================
+# 文档和规格说明（不需要部署）
+# ==================================================
+specs
+cookbook
+README.md
+CLAUDE.md
+*.md
+!package.json
+
+# ==================================================
+# 开发脚本
+# ==================================================
+scripts/generate-password-hash.ts
+scripts/test-password.ts
+
+# ==================================================
+# 其他不需要的文件
+# ==================================================
+.prettierrc
+.eslintrc.json
+.editorconfig
+tsconfig.json
+jest.config.js
+playwright.config.ts

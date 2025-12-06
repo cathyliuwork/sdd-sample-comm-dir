@@ -56,12 +56,29 @@ project-root/
 - **后端**: Next.js API Routes + Prisma ORM
 - **数据库**: Supabase (PostgreSQL)
 - **认证**: 管理员配置文件静态登录，普通用户无需认证
-- **部署**: 待定（未来确定）
+- **部署**: AI Builder/Koyeb (Docker 容器化部署)
+
+## 部署
+
+本项目支持容器化部署到 AI Builder/Koyeb 平台。
+
+**部署文档**:
+- 完整部署指南 → [specs/system/S-06-deployment.md](./specs/system/S-06-deployment.md)
+
+**快速部署步骤**:
+1. 确保代码已推送到 GitHub 公开仓库
+2. 准备环境变量（DATABASE_URL, JWT_SECRET, ADMIN_PASSWORD_HASH）
+3. 调用 AI Builder 部署 API
+4. 等待 5-10 分钟部署完成
+5. 访问 `https://{service-name}.ai-builders.space` 验证
+
+**生产环境替代方案**: 也可部署到 Vercel（推荐）、Railway、Fly.io 等平台。
 
 ## 快速链接
 
 - **完整规格说明** → [specs/README.md](./specs/README.md)
 - **系统架构** → [specs/system/S-00-architecture.md](./specs/system/S-00-architecture.md)
+- **部署指南** → [specs/system/S-06-deployment.md](./specs/system/S-06-deployment.md)
 - **系统设计** → [specs/system/](./specs/system/)
 - **功能规格** → [specs/features/](./specs/features/)
 

@@ -76,6 +76,7 @@ scripts/test-password.ts
 .prettierrc
 .eslintrc.json
 .editorconfig
-tsconfig.json
+# NOTE: tsconfig.json 是必需的，Next.js 需要它来解析路径别名 (@/*)
+# tsconfig.json is REQUIRED - Next.js needs it to resolve path aliases (@/*)
 jest.config.js
 playwright.config.ts

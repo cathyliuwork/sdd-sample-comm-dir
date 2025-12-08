@@ -37,6 +37,9 @@ RUN npm run build
 # ==================================================
 FROM node:18-alpine AS runner
 
+# 安装 OpenSSL 1.1.x（Prisma 需要）
+RUN apk add --no-cache openssl1.1-compat
+
 # 设置工作目录
 WORKDIR /app
 

@@ -32,6 +32,7 @@ yarn-error.log*
 
 # deployment config (contains secrets)
 deployment-config*.json
+deploy-manual.sh
 
 # vercel
 .vercel

@@ -33,6 +33,7 @@ yarn-error.log*
 # deployment config (contains secrets)
 deployment-config*.json
 deploy-manual.sh
+INSTRUCTOR_HELP_NEEDED.md
 
 # vercel
 .vercel

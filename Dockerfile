@@ -19,13 +19,16 @@ COPY prisma ./prisma/
 # 使用 --omit=dev 后再安装 devDependencies 可以减少内存峰值
 RUN npm ci --omit=optional --prefer-offline --no-audit --progress=false
 
-# 3. 复制应用源代码
+# 3. 显式复制 tsconfig.json（确保路径别名解析正常）
+COPY tsconfig.json ./
+
+# 4. 复制应用源代码
 COPY . .
 
-# 4. 生成 Prisma Client（必需，数据库访问）
+# 5. 生成 Prisma Client（必需，数据库访问）
 RUN npx prisma generate
 
-# 5. 构建 Next.js 应用（生成 .next 目录）
+# 6. 构建 Next.js 应用（生成 .next 目录）
 # 限制并发，减少内存使用
 RUN npm run build
 

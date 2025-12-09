@@ -1,7 +1,8 @@
 # ==================================================
 # 阶段 1: 构建阶段（Builder）
 # ==================================================
-FROM node:18-alpine AS builder
+# 使用 Alpine 3.19（3.21 移除了 openssl1.1-compat 包）
+FROM node:18-alpine3.19 AS builder
 
 # 设置工作目录
 WORKDIR /app
@@ -35,7 +36,8 @@ RUN npm run build
 # ==================================================
 # 阶段 2: 运行阶段（Runner）
 # ==================================================
-FROM node:18-alpine AS runner
+# 使用 Alpine 3.19（3.21 移除了 openssl1.1-compat 包）
+FROM node:18-alpine3.19 AS runner
 
 # 安装 OpenSSL 1.1.x（Prisma 需要）
 RUN apk add --no-cache openssl1.1-compat

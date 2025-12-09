@@ -4,9 +4,14 @@
 # 使用 Debian Slim（Prisma 官方推荐，兼容性最佳）
 FROM node:18-slim AS builder
 
-# 安装 OpenSSL（Prisma 需要）
+# 安装构建依赖（OpenSSL + CA证书 + Prisma需要的工具）
 RUN apt-get update && \
-    apt-get install -y openssl ca-certificates && \
+    apt-get install -y \
+      openssl \
+      ca-certificates \
+      python3 \
+      make \
+      g++ && \
     rm -rf /var/lib/apt/lists/*
 
 # 设置工作目录

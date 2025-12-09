@@ -25,6 +25,7 @@ export default function CommunitiesPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingCommunity, setEditingCommunity] = useState<Community | null>(null);
+  const [baseUrl, setBaseUrl] = useState('');
 
   // 表单状态
   const [formData, setFormData] = useState({
@@ -34,6 +35,8 @@ export default function CommunitiesPage() {
   });
 
   useEffect(() => {
+    // 设置当前域名（客户端动态获取）
+    setBaseUrl(window.location.origin);
     fetchCommunities();
   }, []);
 
@@ -194,7 +197,7 @@ export default function CommunitiesPage() {
 
                 <div className="space-y-2 mb-4">
                   <a
-                    href={`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/c/${community.slug}/form`}
+                    href={`${baseUrl}/c/${community.slug}/form`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-sm text-blue-600 hover:text-blue-800"
@@ -202,7 +205,7 @@ export default function CommunitiesPage() {
                     📝 表单链接
                   </a>
                   <a
-                    href={`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/c/${community.slug}/list`}
+                    href={`${baseUrl}/c/${community.slug}/list`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-sm text-blue-600 hover:text-blue-800"

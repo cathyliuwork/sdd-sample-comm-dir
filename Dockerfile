@@ -62,8 +62,9 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # 6. 创建非 root 用户（安全最佳实践）
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001
+# Debian 语法（与 Alpine 不同）
+RUN groupadd --gid 1001 nodejs && \
+    useradd --uid 1001 --gid nodejs --shell /bin/bash --create-home nextjs
 
 # 7. 复制构建产物（仅复制必需文件）
 # standalone 模式会生成自包含的服务器

@@ -1,8 +1,13 @@
 # ==================================================
 # 阶段 1: 构建阶段（Builder）
 # ==================================================
-# 使用 Alpine 3.19（3.21 移除了 openssl1.1-compat 包）
-FROM node:18-alpine3.19 AS builder
+# 使用 Debian Slim（Prisma 官方推荐，兼容性最佳）
+FROM node:18-slim AS builder
+
+# 安装 OpenSSL（Prisma 需要）
+RUN apt-get update && \
+    apt-get install -y openssl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 # 设置工作目录
 WORKDIR /app
@@ -17,7 +22,6 @@ COPY package.json package-lock.json ./
 COPY prisma ./prisma/
 
 # 2. 安装生产依赖和构建依赖
-# 使用 --omit=dev 后再安装 devDependencies 可以减少内存峰值
 RUN npm ci --omit=optional --prefer-offline --no-audit --progress=false
 
 # 3. 显式复制 tsconfig.json（确保路径别名解析正常）
@@ -30,17 +34,18 @@ COPY . .
 RUN npx prisma generate
 
 # 6. 构建 Next.js 应用（生成 .next 目录）
-# 限制并发，减少内存使用
 RUN npm run build
 
 # ==================================================
 # 阶段 2: 运行阶段（Runner）
 # ==================================================
-# 使用 Alpine 3.19（3.21 移除了 openssl1.1-compat 包）
-FROM node:18-alpine3.19 AS runner
+# 使用 Debian Slim（Prisma 官方推荐，内置 OpenSSL 支持）
+FROM node:18-slim AS runner
 
-# 安装 OpenSSL 1.1.x（Prisma 需要）
-RUN apk add --no-cache openssl1.1-compat
+# 安装运行时依赖（OpenSSL 和 CA 证书）
+RUN apt-get update && \
+    apt-get install -y openssl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 # 设置工作目录
 WORKDIR /app

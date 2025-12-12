@@ -1,8 +1,8 @@
 # ==================================================
 # 阶段 1: 构建阶段（Builder）
 # ==================================================
-# 使用 Debian Slim（Prisma 官方推荐，兼容性最佳）
-FROM node:18-slim AS builder
+# 使用 Node.js 22 LTS（活跃支持到 2027-04，固定版本确保构建可重现）
+FROM node:22.20.0-slim AS builder
 
 # 安装构建依赖（OpenSSL + CA证书 + Prisma需要的工具）
 RUN apt-get update && \
@@ -44,8 +44,8 @@ RUN npm run build
 # ==================================================
 # 阶段 2: 运行阶段（Runner）
 # ==================================================
-# 使用 Debian Slim（Prisma 官方推荐，内置 OpenSSL 支持）
-FROM node:18-slim AS runner
+# 使用 Node.js 22 LTS（活跃支持到 2027-04，固定版本确保构建可重现）
+FROM node:22.20.0-slim AS runner
 
 # 安装运行时依赖（OpenSSL 和 CA 证书）
 RUN apt-get update && \
